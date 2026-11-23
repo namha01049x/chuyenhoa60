@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phân Tích Tuổi Chuyển Hóa & Lỗ Hổng Bữa Ăn 60 Giây</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-page: #FCFCFA;
+      --bg-surface: #F2F5F3;
+      --bg-card: #FFFFFF;
+      --ink-primary: #141C1A;
+      --ink-secondary: #52605C;
+      --accent-pine: #16423C;
+      --accent-pine-hover: #0F2E2A;
+      --accent-brass: #A68446;
+      --border-subtle: #DCE3E0;
+      --danger-soft: #FDF2F2;
+      --danger-ink: #9B2C2C;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-page);
+      color: var(--ink-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(252, 252, 250, 0.92);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand-mark {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--accent-pine);
+      letter-spacing: -0.01em;
+    }
+
+    .ref-badge {
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      background: var(--bg-surface);
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+
+    .hero {
+      padding: 12px 0 28px;
+    }
+
+    .audience-note {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent-brass);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 5vw, 2.5rem);
+      line-height: 1.2;
+      font-weight: 600;
+      color: var(--ink-primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--ink-secondary);
+      margin-bottom: 24px;
+      max-width: 52ch;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 14px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--accent-pine);
+      font-weight: 700;
+    }
+
+    .trust-item span {
+      font-size: 0.75rem;
+      color: var(--ink-secondary);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      box-shadow: 0 12px 32px rgba(20, 28, 26, 0.04);
+    }
+
+    .progress-wrap {
+      margin-bottom: 22px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--ink-secondary);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .progress-track {
+      height: 5px;
+      background: var(--bg-surface);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-pine);
+      width: 20%;
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeStep 0.28s ease-out;
+    }
+
+    @keyframes fadeStep {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ink-primary);
+    }
+
+    .step-desc {
+      font-size: 0.9rem;
+      color: var(--ink-secondary);
+      margin-bottom: 20px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-primary);
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      background: var(--bg-page);
+      color: var(--ink-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent-pine);
+      box-shadow: 0 0 0 3px rgba(22, 66, 60, 0.12);
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 52px;
+      padding: 14px 16px;
+      text-align: left;
+      background: var(--bg-page);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--ink-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover {
+      border-color: var(--accent-pine);
+      background: var(--bg-surface);
+    }
+
+    .option-btn.selected {
+      border-color: var(--accent-pine);
+      background: var(--bg-surface);
+      font-weight: 600;
+      box-shadow: inset 0 0 0 1px var(--accent-pine);
+    }
+
+    .upload-box {
+      border: 1.5px dashed var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      background: var(--bg-page);
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+
+    .upload-box input {
+      display: none;
+    }
+
+    .upload-preview {
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: 10px;
+      margin-top: 12px;
+      display: none;
+      object-fit: cover;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-primary {
+      flex: 1;
+      min-height: 50px;
+      background: var(--accent-pine);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 12px 20px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-pine-hover);
+    }
+
+    .btn-secondary {
+      min-height: 50px;
+      background: transparent;
+      color: var(--ink-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 12px 16px;
+    }
+
+    /* Report Screen */
+    .report-header {
+      text-align: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 18px;
+    }
+
+    .metabolic-age-box {
+      display: inline-block;
+      margin: 12px 0 8px;
+      padding: 14px 24px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .metabolic-age-box .num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent-pine);
+      line-height: 1;
+    }
+
+    .metabolic-age-box .caption {
+      font-size: 0.82rem;
+      color: var(--ink-secondary);
+      margin-top: 4px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric-tile {
+      padding: 14px;
+      background: var(--bg-page);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+
+    .metric-tile .m-label {
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      margin-bottom: 4px;
+    }
+
+    .metric-tile .m-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .insight-box {
+      background: var(--danger-soft);
+      border-left: 3px solid var(--danger-ink);
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: var(--ink-primary);
+    }
+
+    .insight-box strong {
+      color: var(--danger-ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .optin-box {
+      background: var(--bg-surface);
+      padding: 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .optin-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+
+    .optin-box p {
+      font-size: 0.86rem;
+      color: var(--ink-secondary);
+      margin-bottom: 14px;
+    }
+
+    .scarcity-note {
+      font-size: 0.78rem;
+      color: var(--accent-brass);
+      font-weight: 600;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .error-msg {
+      color: var(--danger-ink);
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.76rem;
+      color: var(--ink-secondary);
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">Atelier Chuyển Hóa</div>
+    <div class="ref-badge" id="refDisplay">Mã giới thiệu: Trực tiếp</div>
+  </header>
+
+  <main>
+    <section class="hero" id="heroSection">
+      <div class="audience-note">Dành riêng cho phụ nữ văn phòng 25–35 tuổi</div>
+      <h1>Soi Tuổi Mỡ Nội Tạng &amp; Lỗ Hổng Bữa Ăn Trong 60 Giây</h1>
+      <p class="hero-sub">
+        Khám phá chính xác lý do bạn ăn không nhiều nhưng vẫn tích mỡ bụng dưới và thường xuyên tụt năng lượng lúc 2 giờ chiều.
+      </p>
+      <div class="trust-strip">
+        <div class="trust-item">
+          <strong>60 Giây</strong>
+          <span>Hoàn thành tại nhà</span>
+        </div>
+        <div class="trust-item">
+          <strong>0 Đồng</strong>
+          <span>Báo cáo cá nhân hóa</span>
+        </div>
+        <div class="trust-item">
+          <strong>Không App</strong>
+          <span>Bảo mật thông tin</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-meta">
+          <span id="stepLabel">Bước 1 / 5</span>
+          <span id="stepPercent">20%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div class="error-msg" id="errorMsg">Vui lòng điền đầy đủ thông tin để nhận kết quả chính xác.</div>
+
+      <!-- STEP 1 -->
+      <div class="step active" data-step="1">
+        <h2 class="step-title">Chỉ số cơ thể hiện tại</h2>
+        <p class="step-desc">Dùng để tính tỷ lệ mỡ nội tạng (WHtR) và nhu cầu đạm tối thiểu mỗi ngày của bạn.</p>
+        <div class="field-grid">
+          <div class="field">
+            <label for="age">Tuổi của bạn</label>
+            <input type="number" id="age" placeholder="Ví dụ: 29" min="18" max="80" />
+          </div>
+          <div class="field">
+            <label for="height">Chiều cao (cm)</label>
+            <input type="number" id="height" placeholder="Ví dụ: 158" min="130" max="210" />
+          </div>
+          <div class="field">
+            <label for="weight">Cân nặng (kg)</label>
+            <input type="number" id="weight" placeholder="Ví dụ: 56" min="35" max="150" />
+          </div>
+          <div class="field">
+            <label for="waist">Vòng eo ngang rốn (cm)</label>
+            <input type="number" id="waist" placeholder="Ví dụ: 78" min="45" max="150" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn-primary" onclick="nextStep(1)">Tiếp tục phân tích</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step" data-step="2">
+        <h2 class="step-title">Thói quen bữa sáng thường ngày</h2>
+        <p class="step-desc">Bữa sáng quyết định 70% đường huyết và tốc độ đốt mỡ suốt cả ngày làm việc.</p>
+        <div class="option-list" data-key="breakfast">
+          <button type="button" class="option-btn" data-val="carb">Phở, bún, bánh mì, xôi hoặc bún riêu</button>
+          <button type="button" class="option-btn" data-val="skip">Thường nhịn ăn sáng hoặc chỉ uống cà phê</button>
+          <button type="button" class="option-btn" data-val="home">Cơm nhà hoặc đồ ăn tự nấu đủ thịt cá</button>
+          <button type="button" class="option-btn" data-val="light">Yến mạch, sữa hạt hoặc trái cây nhẹ</button>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" onclick="prevStep(2)">Quay lại</button>
+          <button type="button" class="btn-primary" onclick="nextStep(2)">Tiếp tục</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step" data-step="3">
+        <h2 class="step-title">Khung giờ hay tụt năng lượng nhất</h2>
+        <p class="step-desc">Dấu hiệu nhận biết thời điểm đường huyết dao động và tích mỡ vùng eo.</p>
+        <div class="option-list" data-key="slump">
+          <button type="button" class="option-btn" data-val="afternoon">14h–16h chiều: buồn ngủ, thèm trà sữa hoặc đồ ngọt</button>
+          <button type="button" class="option-btn" data-val="morning">10h sáng: cồn cào ruột, mất tập trung</button>
+          <button type="button" class="option-btn" data-val="evening">Sau ăn tối: nặng bụng, khó ngủ hoặc thèm ăn khuya</button>
+          <button type="button" class="option-btn" data-val="allday">Cả ngày đều thấy uể oải, thiếu sức sống</button>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" onclick="prevStep(3)">Quay lại</button>
+          <button type="button" class="btn-primary" onclick="nextStep(3)">Tiếp tục</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step" data-step="4">
+        <h2 class="step-title">Mục tiêu ưu tiên trong 30 ngày tới</h2>
+        <p class="step-desc">Hệ thống sẽ thiết kế lộ trình 7 ngày đầu tiên bám sát mục tiêu này.</p>
+        <div class="option-list" data-key="goal">
+          <button type="button" class="option-btn" data-val="waist">Giảm 3–5 cm mỡ bụng dưới mà không nhịn cơm</button>
+          <button type="button" class="option-btn" data-val="energy">Hết buồn ngủ chiều, tỉnh táo làm việc và ngủ sâu</button>
+          <button type="button" class="option-btn" data-val="gut">Nhẹ bụng, cải thiện tiêu hóa và hết đầy hơi</button>
+          <button type="button" class="option-btn" data-val="tone">Săn chắc vóc dáng, giữ cơ và trẻ hóa làn da</button>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" onclick="prevStep(4)">Quay lại</button>
+          <button type="button" class="btn-primary" onclick="nextStep(4)">Tiếp tục</button>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="step" data-step="5">
+        <h2 class="step-title">Gửi ảnh bữa ăn gần nhất (Tùy chọn)</h2>
+        <p class="step-desc">Bạn có thể tải ảnh bữa trưa/sáng để chuyên gia &amp; AI soi chi tiết hơn, hoặc bấm xem kết quả ngay.</p>
+        <label class="upload-box" for="mealPhoto">
+          <div id="uploadPrompt">
+            <strong>Chạm để chọn ảnh mâm cơm hoặc hộp cơm trưa</strong><br />
+            <span style="font-size: 0.82rem; color: var(--ink-secondary);">Hỗ trợ ảnh chụp trực tiếp từ điện thoại</span>
+          </div>
+          <input type="file" id="mealPhoto" accept="image/*" />
+          <img id="uploadPreview" class="upload-preview" alt="Ảnh bữa ăn của bạn" />
+        </label>
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" onclick="prevStep(5)">Quay lại</button>
+          <button type="button" class="btn-primary" onclick="generateReport()">Xem Bản Đồ Chuyển Hóa</button>
+        </div>
+      </div>
+
+      <!-- RESULT STEP -->
+      <div class="step" data-step="result">
+        <div class="report-header">
+          <div style="font-size: 0.82rem; color: var(--accent-brass); font-weight: 600;">BÁO CÁO CHUYỂN HÓA CÁ NHÂN</div>
+          <div class="metabolic-age-box">
+            <div class="num" id="resMetaAge">35</div>
+            <div class="caption" id="resAgeDiff">Tuổi chuyển hóa ước tính</div>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-tile">
+            <div class="m-label">Tỷ lệ Eo / Chiều cao</div>
+            <div class="m-val" id="resWhtr">0.49</div>
+          </div>
+          <div class="metric-tile">
+            <div class="m-label">Đạm cần / ngày</div>
+            <div class="m-val" id="resProtein">67g</div>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <strong>Lỗ hổng lớn nhất đang cản trở bạn:</strong>
+          <span id="resInsight"></span>
+        </div>
+
+        <div class="optin-box">
+          <h3>Nhận Lộ Trình 7 Ngày Siết Eo Không Nhịn Cơm</h3>
+          <p>
+            Bao gồm thực đơn văn phòng đúng thứ tự ăn, 3 bài tập 15 phút tại nhà và theo dõi 1-1 qua Zalo cho riêng chỉ số của bạn.
+          </p>
+          <div class="field" style="margin-bottom: 12px;">
+            <label for="userName">Tên của bạn</label>
+            <input type="text" id="userName" placeholder="Ví dụ: Minh Anh" />
+          </div>
+          <button type="button" class="btn-primary" style="width: 100%;" onclick="openZaloCTA()">
+            Nhận Lộ Trình 7 Ngày Miễn Phí Qua Zalo
+          </button>
+          <div class="scarcity-note">Mỗi tuần chỉ nhận hỗ trợ trực tiếp tối đa 10 chị em</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Công cụ đánh giá thói quen dinh dưỡng chủ động. Kết quả mang tính tham khảo định hướng lối sống, không thay thế chẩn đoán y khoa.
+  </footer>
+
+  <script>
+    // THAY SỐ ZALO CỦA BẠN TẠI ĐÂY (Ví dụ: 0912345678)
+    const ZALO_PHONE = "0981501865";
+
+    const params = new URLSearchParams(window.location.search);
+    const refId = params.get("ref") || "truc_tiep";
+    if (refId !== "truc_tiep") {
+      document.getElementById("refDisplay").textContent = "Mã giới thiệu: " + refId;
+    }
+
+    const state = {
+      age: 0,
+      height: 0,
+      weight: 0,
+      waist: 0,
+      breakfast: "",
+      slump: "",
+      goal: "",
+      hasPhoto: false
+    };
+
+    // Option buttons selection
+    document.querySelectorAll(".option-list").forEach((list) => {
+      const key = list.getAttribute("data-key");
+      list.querySelectorAll(".option-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          list.querySelectorAll(".option-btn").forEach((b) => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          state[key] = btn.getAttribute("data-val");
+          document.getElementById("errorMsg").style.display = "none";
+        });
+      });
+    });
+
+    // Photo preview
+    document.getElementById("mealPhoto").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      state.hasPhoto = true;
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        const img = document.getElementById("uploadPreview");
+        img.src = ev.target.result;
+        img.style.display = "block";
+        document.getElementById("uploadPrompt").innerHTML = "<strong>Đã tải ảnh bữa ăn thành công</strong>";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function showStep(stepNumber) {
+      document.querySelectorAll(".step").forEach((s) => s.classList.remove("active"));
+      document.querySelector(`.step[data-step="${stepNumber}"]`).classList.add("active");
+      document.getElementById("errorMsg").style.display = "none";
+
+      if (stepNumber === "result") {
+        document.getElementById("progressWrap").style.display = "none";
+        document.getElementById("heroSection").style.display = "none";
+      } else {
+        const pct = Number(stepNumber) * 20;
+        document.getElementById("stepLabel").textContent = `Bước ${stepNumber} / 5`;
+        document.getElementById("stepPercent").textContent = `${pct}%`;
+        document.getElementById("progressFill").style.width = `${pct}%`;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function nextStep(current) {
+      const err = document.getElementById("errorMsg");
+      if (current === 1) {
+        const age = Number(document.getElementById("age").value);
+        const height = Number(document.getElementById("height").value);
+        const weight = Number(document.getElementById("weight").value);
+        const waist = Number(document.getElementById("waist").value);
+        if (!age || !height || !weight || !waist) {
+          err.textContent = "Vui lòng nhập đủ 4 chỉ số để hệ thống tính chính xác.";
+          err.style.display = "block";
+          return;
+        }
+        state.age = age;
+        state.height = height;
+        state.weight = weight;
+        state.waist = waist;
+      } else if (current === 2 && !state.breakfast) {
+        err.textContent = "Vui lòng chọn thói quen bữa sáng của bạn.";
+        err.style.display = "block";
+        return;
+      } else if (current === 3 && !state.slump) {
+        err.textContent = "Vui lòng chọn khung giờ bạn hay thấy mệt nhất.";
+        err.style.display = "block";
+        return;
+      } else if (current === 4 && !state.goal) {
+        err.textContent = "Vui lòng chọn mục tiêu ưu tiên của bạn.";
+        err.style.display = "block";
+        return;
+      }
+      showStep(current + 1);
+    }
+
+    function prevStep(current) {
+      showStep(current - 1);
+    }
+
+    let summaryText = "";
+
+    function generateReport() {
+      const whtr = +(state.waist / state.height).toFixed(2);
+      const proteinNeed = Math.round(state.weight * 1.2);
+
+      let ageOffset = 0;
+      if (whtr >= 0.55) ageOffset += 7;
+      else if (whtr >= 0.50) ageOffset += 4;
+      else if (whtr >= 0.46) ageOffset += 1;
+      else ageOffset -= 2;
+
+      if (state.breakfast === "carb" || state.breakfast === "skip") ageOffset += 2;
+      if (state.slump === "allday" || state.slump === "afternoon") ageOffset += 2;
+
+      const metaAge = Math.max(18, state.age + ageOffset);
+      const diffText =
+        ageOffset > 0
+          ? `Tuổi chuyển hóa ước tính (già hơn tuổi thật +${ageOffset} tuổi)`
+          : `Tuổi chuyển hóa ước tính (tốt hơn tuổi thật ${Math.abs(ageOffset)} tuổi)`;
+
+      let whtrLabel = `${whtr} (Cân đối)`;
+      if (whtr >= 0.53) whtrLabel = `${whtr} (Tích mỡ nội tạng cao)`;
+      else if (whtr >= 0.49) whtrLabel = `${whtr} (Chớm tích mỡ eo)`;
+
+      let insight = "";
+      if (state.breakfast === "carb") {
+        insight = `Bữa sáng nhiều tinh bột nhanh thường chỉ cung cấp ~10–12g đạm (trong khi bạn cần ${proteinNeed}g/ngày). Điều này khiến đường huyết tăng vọt rồi tụt sâu, gây tích mỡ vùng eo và buồn ngủ vào buổi chiều.`;
+      } else if (state.breakfast === "skip") {
+        insight = `Nhịn ăn sáng khiến cơ thể rơi vào trạng thái tiết kiệm năng lượng, làm mất cơ và giữ mỡ bụng dưới. Để giữ dáng bền vững, bạn cần nạp đủ ~25g đạm sạch ngay từ đầu ngày (trên tổng ${proteinNeed}g/ngày).`;
+      } else {
+        insight = `Thói quen ăn hiện tại của bạn cần tối ưu lại thứ tự nạp chất xơ – đạm (mục tiêu ${proteinNeed}g/ngày) để làm phẳng đường huyết sau ăn và tránh tích mỡ nội tạng.`;
+      }
+
+      document.getElementById("resMetaAge").textContent = metaAge;
+      document.getElementById("resAgeDiff").textContent = diffText;
+      document.getElementById("resWhtr").textContent = whtrLabel;
+      document.getElementById("resProtein").textContent = `${proteinNeed}g`;
+      document.getElementById("resInsight").textContent = insight;
+
+      summaryText = `Chào bạn, mình vừa test Tuổi Chuyển Hóa (Mã: ${refId}). Tuổi thật: ${state.age}, Tuổi chuyển hóa: ${metaAge}, WHtR: ${whtr}, Đạm cần: ${proteinNeed}g/ngày. Mình muốn nhận Lộ trình 7 ngày Siết Eo miễn phí.`;
+
+      showStep("result");
+    }
+
+    function openZaloCTA() {
+      const name = document.getElementById("userName").value.trim() || "Mình";
+      const fullMsg = encodeURIComponent(`[${name}] ` + summaryText);
+      const zaloUrl = `https://zalo.me/${ZALO_PHONE}?text=${fullMsg}`;
+      window.open(zaloUrl, "_blank");
+    }
+  </script>
+</body>
+</html>
