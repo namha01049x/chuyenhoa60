@@ -605,6 +605,190 @@
       margin-top: 10px;
     }
 
+    .waist-helper {
+      margin: -4px 0 22px;
+      padding: 12px 14px;
+      background: #FAF9F6;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+    }
+
+    .waist-helper-label {
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .size-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .size-pill {
+      min-height: 44px;
+      padding: 6px 8px;
+      border: 1px solid var(--border-hairline);
+      border-radius: 10px;
+      background: #FFFFFF;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--ink-primary);
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.25;
+      transition: all 0.2s ease;
+    }
+
+    .size-pill strong {
+      display: block;
+      font-size: 0.82rem;
+    }
+
+    .size-pill span {
+      font-size: 0.72rem;
+      color: var(--ink-secondary);
+    }
+
+    .size-pill:hover,
+    .size-pill.selected {
+      border-color: var(--accent-pine);
+      background: var(--bg-soft);
+    }
+
+    .size-pill.selected strong {
+      color: var(--accent-pine);
+    }
+
+    .copy-toast {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 0.82rem;
+      color: #F4FBF8;
+      text-align: center;
+    }
+
+    .sample-day-box {
+      display: none;
+      margin-top: 18px;
+      padding: 18px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+    }
+
+    .sample-day-box h4 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--accent-pine);
+      margin-bottom: 10px;
+    }
+
+    .sample-day-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--ink-primary);
+    }
+
+    .sample-day-list li {
+      padding: 10px 12px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-hairline);
+      border-radius: 10px;
+    }
+
+    .proof-strip {
+      margin-top: 22px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .proof-heading {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .proof-card {
+      padding: 14px 16px;
+      background: #FAF9F6;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      color: var(--ink-primary);
+    }
+
+    .proof-card strong {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--accent-pine);
+      margin-bottom: 4px;
+    }
+
+    .referral-box {
+      margin-top: 20px;
+      padding: 18px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+    }
+
+    .referral-box h4 {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 4px;
+    }
+
+    .referral-box p {
+      font-size: 0.82rem;
+      color: var(--ink-secondary);
+      margin-bottom: 12px;
+    }
+
+    .referral-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .referral-row input {
+      flex: 1;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--border-hairline);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.86rem;
+      background: #FAF9F6;
+    }
+
+    .btn-outline-sm {
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--accent-pine);
+      background: transparent;
+      color: var(--accent-pine);
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-outline-sm:hover {
+      background: var(--bg-soft);
+    }
+
     footer {
       text-align: center;
       padding: 20px 24px 32px;
@@ -645,6 +829,14 @@
 
       .metric-grid {
         grid-template-columns: 1fr;
+      }
+
+      .size-pills {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .referral-row {
+        flex-direction: column;
       }
     }
   </style>
@@ -735,6 +927,15 @@
               <input type="number" id="waist" placeholder="Ví dụ: 78" min="45" max="150" />
             </div>
           </div>
+          <div class="waist-helper">
+            <span class="waist-helper-label">Chưa có thước dây? Chạm chọn nhanh theo size quần/váy bạn đang mặc:</span>
+            <div class="size-pills" id="waistSizePills">
+              <button type="button" class="size-pill" data-waist="66"><strong>Size S</strong><span>Eo ~66 cm</span></button>
+              <button type="button" class="size-pill" data-waist="74"><strong>Size M</strong><span>Eo ~74 cm</span></button>
+              <button type="button" class="size-pill" data-waist="82"><strong>Size L</strong><span>Eo ~82 cm</span></button>
+              <button type="button" class="size-pill" data-waist="89"><strong>Size XL+</strong><span>Eo ~89 cm</span></button>
+            </div>
+          </div>
           <div class="btn-row">
             <button type="button" class="btn-primary" onclick="nextStep(1)">Tiếp tục phân tích</button>
           </div>
@@ -790,16 +991,14 @@
 
         <!-- STEP 5 -->
         <div class="step" data-step="5">
-          <h2 class="step-title">Gửi ảnh bữa ăn gần nhất (Tùy chọn)</h2>
-          <p class="step-desc">Tải ảnh bữa trưa hoặc sáng để nhận xét chi tiết hơn, hoặc bấm xem kết quả ngay.</p>
-          <label class="upload-box" for="mealPhoto">
-            <div id="uploadPrompt">
-              <strong>Chạm để chọn ảnh mâm cơm hoặc hộp cơm trưa</strong><br />
-              <span style="font-size: 0.82rem; color: var(--ink-secondary);">Hỗ trợ ảnh chụp trực tiếp từ điện thoại</span>
-            </div>
-            <input type="file" id="mealPhoto" accept="image/*" />
-            <img id="uploadPreview" class="upload-preview" alt="Ảnh bữa ăn của bạn" />
-          </label>
+          <h2 class="step-title">Thói quen bữa trưa &amp; ăn xế chiều</h2>
+          <p class="step-desc">Yếu tố quyết định 60% lượng calo dư thừa và cơn buồn ngủ lúc 14h–16h tại văn phòng.</p>
+          <div class="option-list" data-key="lunch">
+            <button type="button" class="option-btn" data-val="office_rice">Cơm văn phòng / Cơm hàng (nhiều cơm, món kho chiên)</button>
+            <button type="button" class="option-btn" data-val="noodles">Bún, phở, mì hoặc đồ nước bên ngoài</button>
+            <button type="button" class="option-btn" data-val="snack_tea">Ăn trưa ít nhưng hay uống trà sữa / ăn vặt lúc 15h</button>
+            <button type="button" class="option-btn" data-val="home_clean">Tự nấu mang đi, ưu tiên rau và thịt cá nạc</button>
+          </div>
           <div class="btn-row">
             <button type="button" class="btn-secondary" onclick="prevStep(5)">Quay lại</button>
             <button type="button" class="btn-primary" onclick="generateReport()">Xem Bản Đồ Chuyển Hóa</button>
@@ -833,18 +1032,52 @@
           </div>
 
           <div class="optin-box">
-            <h3>Nhận Lộ Trình 7 Ngày Siết Eo Không Nhịn Cơm</h3>
+            <h3>Mở Khóa Thực Đơn Mẫu 1 Ngày &amp; Lộ Trình 7 Ngày Siết Eo</h3>
             <p>
-              Thực đơn văn phòng đúng thứ tự ăn, 3 bài tập 15 phút tại nhà và đồng hành 1-1 qua Zalo cho riêng chỉ số của bạn.
+              Nhập tên và số Zalo để mở khóa ngay thực đơn mẫu 1 ngày đúng ngưỡng đạm của bạn và nhận hỗ trợ 1-1 qua Zalo.
             </p>
-            <div class="field" style="margin-bottom: 14px;">
-              <label for="userName">Tên của bạn</label>
-              <input type="text" id="userName" placeholder="Ví dụ: Minh Anh" />
+            <div class="field-grid" style="margin-bottom: 14px;">
+              <div class="field">
+                <label for="userName">Tên của bạn</label>
+                <input type="text" id="userName" placeholder="Ví dụ: Minh Anh" />
+              </div>
+              <div class="field">
+                <label for="userPhone">Số Zalo của bạn</label>
+                <input type="tel" id="userPhone" placeholder="Ví dụ: 0912345678" inputmode="numeric" />
+              </div>
             </div>
-            <button type="button" class="btn-gold" onclick="openZaloCTA()">
-              Nhận Lộ Trình 7 Ngày Miễn Phí Qua Zalo
+            <button type="button" class="btn-gold" onclick="submitLeadAndOpenZalo()">
+              Mở Khóa Thực Đơn &amp; Kết Nối Zalo Ngay
             </button>
+            <div class="copy-toast" id="copyToast"></div>
             <div class="scarcity-note">Mỗi tuần chỉ nhận hỗ trợ trực tiếp tối đa 10 chị em</div>
+          </div>
+
+          <div class="sample-day-box" id="sampleDayBox">
+            <h4>Thực đơn mẫu Ngày 1 dành riêng cho bạn</h4>
+            <ul class="sample-day-list" id="sampleDayList"></ul>
+          </div>
+
+          <div class="proof-strip">
+            <div class="proof-heading">Kết quả thực tế từ người áp dụng</div>
+            <div class="proof-card">
+              <strong>Chị Thảo (29 tuổi · Nhân sự văn phòng)</strong>
+              Giảm 4 cm vòng eo sau 14 ngày chỉ bằng cách đổi bữa sáng đủ ~25g đạm và áp dụng đúng thứ tự ăn Rau – Đạm – Tinh bột, hết hẳn cơn buồn ngủ lúc 15h.
+            </div>
+            <div class="proof-card">
+              <strong>Anh Nam (30+ tuổi · Người trực tiếp đồng hành)</strong>
+              Từ 56 kg lên 64 kg (+8 kg cơ nạc &amp; thể trạng) và cải thiện rõ rệt tình trạng dạ dày nhờ kỷ luật bữa sáng lành mạnh, đủ đạm và cân bằng chuyển hóa mỗi ngày.
+            </div>
+          </div>
+
+          <div class="referral-box">
+            <h4>Tặng bạn bè bài test Tuổi Chuyển Hóa</h4>
+            <p>Tạo link giới thiệu mang tên bạn để rủ đồng nghiệp hoặc người thân cùng đo chỉ số miễn phí.</p>
+            <div class="referral-row">
+              <input type="text" id="refNameInput" placeholder="Nhập tên hoặc biệt danh của bạn (vd: minhanh)" />
+              <button type="button" class="btn-outline-sm" onclick="copyReferralLink()">Tạo &amp; Sao chép link</button>
+            </div>
+            <div id="refCopyStatus" style="font-size: 0.78rem; color: var(--accent-pine); margin-top: 8px; display: none;"></div>
           </div>
         </div>
       </div>
@@ -857,6 +1090,8 @@
 
   <script>
     const ZALO_PHONE = "0981501865";
+    // Dán URL Google Apps Script Web App vào đây khi muốn đồng bộ Lead tự động về Google Sheets
+    const GOOGLE_SHEET_WEBHOOK_URL = "";
 
     const params = new URLSearchParams(window.location.search);
     const refId = params.get("ref") || "truc_tiep";
@@ -872,8 +1107,50 @@
       breakfast: "",
       slump: "",
       goal: "",
-      hasPhoto: false
+      lunch: ""
     };
+
+    function trackFunnelEvent(eventName, detail = {}) {
+      try {
+        const key = "atelier_funnel_events_v1";
+        const logs = JSON.parse(localStorage.getItem(key) || "[]");
+        logs.push({
+          event: eventName,
+          ref: refId,
+          at: new Date().toISOString(),
+          ...detail
+        });
+        localStorage.setItem(key, JSON.stringify(logs.slice(-200)));
+        if (typeof window.gtag === "function") {
+          window.gtag("event", eventName, { ref: refId, ...detail });
+        }
+        if (typeof window.fbq === "function") {
+          window.fbq("trackCustom", eventName, { ref: refId, ...detail });
+        }
+      } catch (_) {}
+    }
+
+    window.atelierStats = function () {
+      const events = JSON.parse(localStorage.getItem("atelier_funnel_events_v1") || "[]");
+      const leads = JSON.parse(localStorage.getItem("atelier_leads_v1") || "[]");
+      return { totalEvents: events.length, totalLeads: leads.length, events, leads };
+    };
+
+    trackFunnelEvent("funnel_view", { step: 1 });
+
+    // Quick waist estimator pills
+    document.querySelectorAll("#waistSizePills .size-pill").forEach((pill) => {
+      pill.addEventListener("click", () => {
+        document.querySelectorAll("#waistSizePills .size-pill").forEach((p) => p.classList.remove("selected"));
+        pill.classList.add("selected");
+        document.getElementById("waist").value = pill.getAttribute("data-waist");
+        document.getElementById("errorMsg").style.display = "none";
+      });
+    });
+
+    document.getElementById("waist").addEventListener("input", () => {
+      document.querySelectorAll("#waistSizePills .size-pill").forEach((p) => p.classList.remove("selected"));
+    });
 
     document.querySelectorAll(".option-list").forEach((list) => {
       const key = list.getAttribute("data-key");
@@ -885,20 +1162,6 @@
           document.getElementById("errorMsg").style.display = "none";
         });
       });
-    });
-
-    document.getElementById("mealPhoto").addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      state.hasPhoto = true;
-      const reader = new FileReader();
-      reader.onload = function (ev) {
-        const img = document.getElementById("uploadPreview");
-        img.src = ev.target.result;
-        img.style.display = "block";
-        document.getElementById("uploadPrompt").innerHTML = "<strong>Đã tải ảnh bữa ăn thành công</strong>";
-      };
-      reader.readAsDataURL(file);
     });
 
     function showStep(stepNumber) {
@@ -926,7 +1189,7 @@
         const weight = Number(document.getElementById("weight").value);
         const waist = Number(document.getElementById("waist").value);
         if (!age || !height || !weight || !waist) {
-          err.textContent = "Vui lòng nhập đủ 4 chỉ số để hệ thống tính chính xác.";
+          err.textContent = "Vui lòng nhập đủ 4 chỉ số (hoặc chọn nhanh size quần/váy cho vòng eo).";
           err.style.display = "block";
           return;
         }
@@ -947,6 +1210,7 @@
         err.style.display = "block";
         return;
       }
+      trackFunnelEvent(`step_${current}_completed`, { nextStep: current + 1 });
       showStep(current + 1);
     }
 
@@ -955,8 +1219,16 @@
     }
 
     let summaryText = "";
+    let computedReport = {};
 
     function generateReport() {
+      const err = document.getElementById("errorMsg");
+      if (!state.lunch) {
+        err.textContent = "Vui lòng chọn thói quen bữa trưa & ăn xế để hoàn tất phân tích.";
+        err.style.display = "block";
+        return;
+      }
+
       const whtr = +(state.waist / state.height).toFixed(2);
       const proteinNeed = Math.round(state.weight * 1.2);
 
@@ -968,6 +1240,7 @@
 
       if (state.breakfast === "carb" || state.breakfast === "skip") ageOffset += 2;
       if (state.slump === "allday" || state.slump === "afternoon") ageOffset += 2;
+      if (state.lunch === "snack_tea" || state.lunch === "office_rice") ageOffset += 1;
 
       const metaAge = Math.max(18, state.age + ageOffset);
       const diffText =
@@ -981,12 +1254,16 @@
 
       let insight = "";
       if (state.breakfast === "carb") {
-        insight = `Bữa sáng nhiều tinh bột nhanh thường chỉ cung cấp ~10–12g đạm (trong khi bạn cần ${proteinNeed}g/ngày). Điều này khiến đường huyết tăng vọt rồi tụt sâu, gây tích mỡ vùng eo và buồn ngủ vào buổi chiều.`;
+        insight = `Bữa sáng nhiều tinh bột nhanh thường chỉ cung cấp ~10–12g đạm (trong khi bạn cần ${proteinNeed}g/ngày). Kết hợp với bữa trưa/xế hiện tại, đường huyết dễ tăng vọt rồi tụt sâu, gây tích mỡ vùng eo và buồn ngủ lúc 14h–16h.`;
       } else if (state.breakfast === "skip") {
         insight = `Nhịn ăn sáng khiến cơ thể rơi vào trạng thái tiết kiệm năng lượng, làm mất cơ và giữ mỡ bụng dưới. Để giữ dáng bền vững, bạn cần nạp đủ ~25g đạm sạch ngay từ đầu ngày (trên tổng ${proteinNeed}g/ngày).`;
+      } else if (state.lunch === "snack_tea") {
+        insight = `Lỗ hổng lớn nhất nằm ở cữ ăn xế lúc 15h (trà sữa/đồ ngọt) khiến đường huyết vọt cao dù bữa chính ăn ít. Chỉ cần nạp đủ ${proteinNeed}g đạm/ngày từ bữa sáng và trưa, cơn thèm ngọt buổi chiều sẽ tự giảm rõ rệt.`;
       } else {
-        insight = `Thói quen ăn hiện tại của bạn cần tối ưu lại thứ tự nạp chất xơ – đạm (mục tiêu ${proteinNeed}g/ngày) để làm phẳng đường huyết sau ăn và tránh tích mỡ nội tạng.`;
+        insight = `Thói quen ăn hiện tại của bạn cần tối ưu lại thứ tự nạp Chất xơ – Đạm – Tinh bột (mục tiêu ${proteinNeed}g đạm/ngày) để làm phẳng đường huyết sau ăn và giải phóng mỡ nội tạng vùng eo.`;
       }
+
+      computedReport = { whtr, proteinNeed, metaAge };
 
       document.getElementById("resMetaAge").textContent = metaAge;
       document.getElementById("resAgeDiff").textContent = diffText;
@@ -996,14 +1273,122 @@
 
       summaryText = `Chào bạn, mình vừa test Tuổi Chuyển Hóa (Mã: ${refId}). Tuổi thật: ${state.age}, Tuổi chuyển hóa: ${metaAge}, WHtR: ${whtr}, Đạm cần: ${proteinNeed}g/ngày. Mình muốn nhận Lộ trình 7 ngày Siết Eo miễn phí.`;
 
+      trackFunnelEvent("result_viewed", { metaAge, whtr, proteinNeed });
       showStep("result");
     }
 
-    function openZaloCTA() {
-      const name = document.getElementById("userName").value.trim() || "Mình";
-      const fullMsg = encodeURIComponent(`[${name}] ` + summaryText);
-      const zaloUrl = `https://zalo.me/${ZALO_PHONE}?text=${fullMsg}`;
+    function renderSampleDayMenu() {
+      const morningProtein = Math.max(20, Math.round((computedReport.proteinNeed || 60) * 0.35));
+      const list = document.getElementById("sampleDayList");
+      list.innerHTML = `
+        <li><strong>Bữa sáng (07:00 – 08:00):</strong> Nạp ~${morningProtein}g đạm sạch + chất xơ trước khi ăn tinh bột (ví dụ: 2 trứng luộc/ức gà áp chảo hoặc ly dinh dưỡng cân bằng đạm ít đường) để khóa cơn thèm ngọt tới trưa.</li>
+        <li><strong>Bữa trưa văn phòng (12:00):</strong> Ăn đúng thứ tự <em>Rau luộc/salad trước → Thịt/cá/đậu phụ → Cơm/tinh bột sau cùng</em> (giảm 1/3 lượng cơm trắng so với thường ngày).</li>
+        <li><strong>Cữ chiều (15:30):</strong> Uống 300ml nước ấm hoặc trà thảo mộc không đường + 1 nắm nhỏ hạt hạnh nhân/sữa chua không đường để tỉnh táo đến 18h.</li>
+        <li><strong>Bữa tối (19:00):</strong> Ưu tiên canh rau + đạm nhẹ dễ tiêu (cá hấp, tôm, ức gà), kết thúc ăn trước khi ngủ ít nhất 3 tiếng.</li>
+      `;
+      document.getElementById("sampleDayBox").style.display = "block";
+    }
+
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_) {}
+      }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (_) {}
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    async function submitLeadAndOpenZalo() {
+      const name = document.getElementById("userName").value.trim();
+      const rawPhone = document.getElementById("userPhone").value.trim();
+      const cleanPhone = rawPhone.replace(/[\s.\-()]/g, "");
+      const err = document.getElementById("errorMsg");
+
+      if (!name) {
+        err.textContent = "Vui lòng nhập tên của bạn để mở khóa thực đơn.";
+        err.style.display = "block";
+        document.getElementById("userName").focus();
+        return;
+      }
+
+      if (!/^(0|\+84)[0-9]{8,10}$/.test(cleanPhone)) {
+        err.textContent = "Vui lòng nhập số Zalo hợp lệ (10 chữ số, ví dụ: 0912345678).";
+        err.style.display = "block";
+        document.getElementById("userPhone").focus();
+        return;
+      }
+
+      err.style.display = "none";
+
+      const leadPayload = {
+        timestamp: new Date().toISOString(),
+        refId,
+        name,
+        phone: cleanPhone,
+        ...state,
+        ...computedReport
+      };
+
+      try {
+        const leads = JSON.parse(localStorage.getItem("atelier_leads_v1") || "[]");
+        leads.push(leadPayload);
+        localStorage.setItem("atelier_leads_v1", JSON.stringify(leads.slice(-100)));
+      } catch (_) {}
+
+      if (GOOGLE_SHEET_WEBHOOK_URL) {
+        fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(leadPayload)
+        }).catch(() => {});
+      }
+
+      renderSampleDayMenu();
+      trackFunnelEvent("lead_submitted", { hasPhone: true });
+
+      const fullPlainMsg = `[${name} - ${cleanPhone}] ` + summaryText;
+      const copied = await copyToClipboard(fullPlainMsg);
+      const toast = document.getElementById("copyToast");
+      toast.textContent = copied
+        ? "Đã mở khóa thực đơn mẫu bên dưới & sao chép sẵn tóm tắt chỉ số! Bạn chỉ cần Dán (Paste) vào khung chat Zalo."
+        : "Đã mở khóa thực đơn mẫu bên dưới! Đang mở khung chat Zalo...";
+      toast.style.display = "block";
+
+      const zaloUrl = `https://zalo.me/${ZALO_PHONE}?text=${encodeURIComponent(fullPlainMsg)}`;
+      trackFunnelEvent("zalo_opened");
       window.open(zaloUrl, "_blank");
+    }
+
+    async function copyReferralLink() {
+      const raw = document.getElementById("refNameInput").value.trim();
+      const slug = raw
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "") || "ban_be";
+      const baseUrl = window.location.origin + window.location.pathname;
+      const refUrl = `${baseUrl}?ref=${slug}`;
+      const ok = await copyToClipboard(refUrl);
+      const status = document.getElementById("refCopyStatus");
+      status.textContent = ok
+        ? `Đã sao chép link của bạn: ${refUrl}`
+        : `Link của bạn: ${refUrl}`;
+      status.style.display = "block";
+      trackFunnelEvent("referral_copied", { slug });
     }
   </script>
 </body>
